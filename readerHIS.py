@@ -28,7 +28,6 @@ class mockNDarray(object):
                 return mockNDarray(*a) # recursively mockify lists
             if a is None:
                 return mockNDarray()   # None makes an empty mockNDarray
-            
             return np.array(a) # use standard conversion to ndarray (copy!) 
             # raise ValueError, "don't know how to mockify %s" %(a,)
         self._arrs = [conv(a) for a in arrs]
@@ -38,9 +37,9 @@ class mockNDarray(object):
         """
         this is the workhorse function, that makes the internal state consistent
         sets:
-           self._mockAxis
-           self._ndim
-           self._shape
+            self._mockAxis
+            self._ndim
+            self._shape
         """
         self._mockAxis = i
         if len(self._arrs)==0:
@@ -140,22 +139,22 @@ class mockNDarray(object):
             else:
                 mockIdx = idx[self._mockAxis]
                 idxSkipMock = idx[:self._mockAxis] + idx[self._mockAxis+1:]
-            
+
 
             if isinstance(mockIdx, slice):
                 s = copy.copy(self)
-                
+
                 s._arrs = [a[idxSkipMock] for a in self._arrs[mockIdx]]
                 shiftMockAxisBecauseOfInt = sum((1 for i in idx[:self._mockAxis] if not isinstance(i, slice)))
-                s._mockAxisSet( self._mockAxis-shiftMockAxisBecauseOfInt )          
+                s._mockAxisSet( self._mockAxis-shiftMockAxisBecauseOfInt )
                 return s
             elif mockIdx is None:
                 s = copy.copy(self)
                 s._arrs = [a[None][idxSkipMock] for a in self._arrs]
                 s._mockAxisSet( self._mockAxis+1 )
-                idxSkipMock = (slice(None),)+idxSkipMock  # adjust idxSkipMock to keep new axis 
+                idxSkipMock = (slice(None),)+idxSkipMock  # adjust idxSkipMock to keep new axis
                 return s[idxSkipMock]
-                
+
             else: # mockIdx is "normal" int - CHECK
                 # return non-mock ndarray, (or mockNDarray, if there are nested ones)
                 return self._arrs[mockIdx][idxSkipMock]
@@ -213,9 +212,7 @@ class mockNDarray(object):
     def view(self):
         from copy import copy
         return copy(self)
-    
-    
-    
+
 # 64 bytes
 dtypeHIS = np.dtype([
     ('magic', 'a2'),
@@ -271,10 +268,10 @@ def _try_openHIS_fastMap(m):
         return None # there are probably comments in other sections, fastMap cannot be used
 
     mm = m[comLen:] # first hdr will be "corrupt", since comment is just before first imgData
-    a = np.recarray(nz, dtype=[( 'hdr',     dtypeHIS ), 
-                              ( 'imgData', (imgPixDType, (ny,nx)) ),
-                              ], 
-                   buf=mm)
+    a = np.recarray(nz, dtype=[( 'hdr',     dtypeHIS ),
+                                ( 'imgData', (imgPixDType, (ny,nx)) ),
+                                ],
+                    buf=mm)
 
     if comLen:
         hisComment = m[64:64+comLen]
@@ -319,7 +316,7 @@ def readSection(m, offsetSect = 0):
         hisComment = ('',)
     imgPixDType = hisType2numpyDtype[ hisHdr['pixType'][0] ]
     imgBytes = int(hisHdr['iDX'][0]) * int(hisHdr['iDY'][0]) * imgPixDType().itemsize
-    
+
     sectEnd = offsetImg + imgBytes
 
     img = m[offsetImg:sectEnd]
@@ -330,7 +327,7 @@ def readSection(m, offsetSect = 0):
     #import weakref
     #hisHdr     = weakref.proxy( hisHdr )
     #hisComment = weakref.proxy( hishisComment )
-    
+
 #20100224     img.__class__ = ndarray_inHisFile
     class hisHeaderInfo:
         hdr = hisHdr
@@ -341,7 +338,7 @@ def readSection(m, offsetSect = 0):
     img = ndarray_inHisFile(img, hisInfo=hisHeaderInfo)
 
     return img
-    
+
 def openHIS(fn, mode='r'):
 
     """
