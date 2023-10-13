@@ -19,8 +19,11 @@ def signal_handler(sig, frame):  #trapping signal
 def get_numbers_from_filename(filename):
     return re.search(r'\d+', filename).group(0)
 
-his_folder="/mnt/g/My Drive/Software/conversion_script-test/start/"
-root_folder="/mnt/g/My Drive/Software/conversion_script-test/end/"
+#root and his config
+file = open("/mnt/g/My Drive/Software/conversion_script/dirconfig.txt", "r")
+for string in file:
+    exec(string)
+file.close()
 
 #get the run numbers to ceonvert and the one already converted
 his_num,root_num=[],[]
@@ -28,6 +31,7 @@ for filename in os.listdir(his_folder):
     his_num.append(get_numbers_from_filename(filename))
 for filename in os.listdir(root_folder):
     root_num.append(get_numbers_from_filename(filename))
+print(root_num)
 
 to_convert_string=set(his_num).difference(root_num)
 to_convert=[int(item) for item in to_convert_string]
@@ -42,7 +46,7 @@ for num in to_convert:
     print(str(dt.now())+" - START converting run"+str(('%05d' % num)))
 
     prename="run%05d.HIS" % (num)
-    aftername="run%05d.root" % (num)
+    aftername="histograms_Run%05d.root" % (num)
 
     his_file=his_folder+prename
     stem, _ = os.path.splitext(his_file)

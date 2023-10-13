@@ -1,0 +1,2 @@
+his_folder="/mnt/g/My Drive/Software/conversion_script/start/"
+root_folder="/mnt/g/My Drive/Software/conversion_script/end/"
