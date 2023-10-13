@@ -31,7 +31,7 @@ for filename in os.listdir(his_folder):
     his_num.append(get_numbers_from_filename(filename))
 for filename in os.listdir(root_folder):
     root_num.append(get_numbers_from_filename(filename))
-print(root_num)
+#print(root_num)
 
 to_convert_string=set(his_num).difference(root_num)
 to_convert=[int(item) for item in to_convert_string]
