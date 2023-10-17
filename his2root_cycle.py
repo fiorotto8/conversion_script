@@ -20,7 +20,7 @@ def get_numbers_from_filename(filename):
     return re.search(r'\d+', filename).group(0)
 
 #root and his config
-file = open("/mnt/g/My Drive/Software/conversion_script/dirconfig.txt", "r")
+file = open("/mnt/c/Users/Cygnus/Desktop/SOFTWARE/conversion_script/dirconfig.txt", "r")
 for string in file:
     exec(string)
 file.close()
@@ -45,14 +45,17 @@ else:
 for num in to_convert:
     print(str(dt.now())+" - START converting run"+str(('%05d' % num)))
 
-    prename="run%05d.HIS" % (num)
-    aftername="histograms_Run%05d.root" % (num)
+    prename="/run%05d.HIS" % (num)
+    aftername="/histograms_Run%05d.root" % (num)
 
     his_file=his_folder+prename
     stem, _ = os.path.splitext(his_file)
     runN = stem.split('run')[-1]
     run = runN if len(runN) else 'XXXX'
-    his = openHIS(his_file)
+    try: his = openHIS(his_file)
+    except PermissionError:
+        print(str(dt.now())+" - File"+str(('%05d' % num))+" is still on data taking, skipping")
+        continue 
 
     rf_name=root_folder+aftername
     rf=ROOT.TFile(rf_name,'recreate')

@@ -1,2 +1,2 @@
-his_folder="/mnt/g/My Drive/Software/conversion_script/start/"
-root_folder="/mnt/g/My Drive/Software/conversion_script/end/"
+his_folder="/mnt/e/MANGO_LNGS/"
+root_folder="/mnt/e/MANGO_ROOTconverted/"

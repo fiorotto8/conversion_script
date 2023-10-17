@@ -99,8 +99,7 @@ for j in lista:
     while(not status):   #tries many times for errors of connection or others that may be worth another try
 
             status=upload_file(name,tag=TAG)
-            if(status):
-                        os.system("rm "+name) 
+            #if(status): os.system("rm "+name) 
             current_try=current_try+1
             if current_try==max_tries:
                 #print('Try number '+current_try)
