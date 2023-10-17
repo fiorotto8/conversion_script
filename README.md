@@ -18,3 +18,16 @@ PYTHONPATH=path/to/root/lib
 59 * * * * ps -axu | grep his2root_cycle.py | awk '{print $2}' | xargs kill -SIGINT
 ```
 This makes the code running every hour. If the conversion is not finished in time, the script is killed and the .root file on processing is deleted to avoid to save corroupted root files.
+
+An eventual error on the cronlog.txt is normal:
+```
+sh: 1: root-config: not found
+Error in <TUnixSystem::GetFromPipe>: command "root-config --has-dataframe" returned 32512
+```
+
+## Upload on cloud
+Open a shell and launch `source activate_agent.sh`
+After that you can launch `python3 Cycle_ROOT2cloud.py <startRunNum> <stopRunNum>`
+Check oftenly the shell beacuse sometimes the oidc-agent is crashing...
+
+
