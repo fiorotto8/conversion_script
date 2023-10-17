@@ -1,4 +1,4 @@
 end
 start
-cron_log.txt
-cron*
+*_py*
+*cron*
