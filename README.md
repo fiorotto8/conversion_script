@@ -1,4 +1,4 @@
-# Conversion (and Upload) of .HIS files
+# Conversion Upload and Reco of .HIS files
 
 ## Automatic conversion
 
@@ -14,7 +14,7 @@ To set up cronjob service at machine start in WSL check [here](https://www.howto
 If cronjob service is running you can setup the cronjob with `crontab -e` and write the following lines
 ```
 PYTHONPATH=path/to/root/lib
-00 * * * * python3 path/to/his2root_cycle.py >> path/to/cron_log.txt 2>&1
+00 * * * * python3 path/to/his2root_cycle.py >> path/to/cronCONV_log.txt 2>&1
 59 * * * * ps -axu | grep his2root_cycle.py | awk '{print $2}' | xargs kill -SIGINT
 ```
 This makes the code running every hour. If the conversion is not finished in time, the script is killed and the .root file on processing is deleted to avoid to save corroupted root files.
@@ -30,4 +30,12 @@ Open a shell and launch `source activate_agent.sh`
 After that you can launch `python3 Cycle_ROOT2cloud.py <startRunNum> <stopRunNum>`
 Check oftenly the shell beacuse sometimes the oidc-agent is crashing...
 
-
+## Semi-automatic Reconstruction
+The reconstruction code is a pain in the a**...
+So a working version of it is mounted of the MANGO PC, for different PC and version we should check
+This version is a slighly modified from the Winter23-patch2, but it cannot still work on multi-core 
+The strategy is to reconstruct **one** run every 20min via cronjob, any errors should be handeled manually.
+*Attention*:
+- pedestal runs should be artificially created in the `reco_folder`, otherwise you reconstruct them (not critical)
+- check on the `cronRECO_log.txt` that the reconstrcions succeded otherwise you should remove the .root not completed and the cron will re-reconstruct it
+- crontab line: `*/20 * * * * python3 path/to/recoCycle.py >> path/to/cronRECO_log.txt 2>&1`

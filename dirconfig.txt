@@ -1,2 +1,3 @@
 his_folder="/mnt/e/MANGO_LNGS/"
 root_folder="/mnt/e/MANGO_ROOTconverted/"
+reco_folder="/mnt/e/MANGO_reco/"
