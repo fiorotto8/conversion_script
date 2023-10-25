@@ -48,6 +48,6 @@ num=to_convert[0]
 name=reco_folder+"/reco_run%05d_3D.root" % (num)
 #rf=ROOT.TFile(name,'recreate')
 print(str(dt.now())+" - START reconstruct run"+str(('%05d' % num)))
-os.system("cd /mnt/c/Users/Cygnus/Desktop/SOFTWARE/reconstruction && python3 reconstruction.py configFile_MANGO.txt -t /mnt/e/MANGO_ROOTconverted --pdir ./output_plots -r "+str(('%05d' % num))+" --outdir "+str(reco_folder))
+os.system("cd /mnt/c/Users/Cygnus/Desktop/SOFTWARE/reconstruction && python3 reconstruction.py configFile_MANGO.txt -j4 -t "+str(root_folder)+" --pdir ./output_plots -r "+str(('%05d' % num))+" --outdir "+str(reco_folder))
 print(str(dt.now())+" - FINISH reconstruct run"+str(('%05d' % num)))
 signal.signal(signal.SIGINT, signal_handler)

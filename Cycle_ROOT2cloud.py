@@ -26,7 +26,7 @@ def upload_file(file_name, bucket='cygno-data', tag='LAB'):
 
     # Upload the file
     try:
-        response=s3.head_object(Bucket=bucket,Key=key+file_name)
+        response=s3.head_object(Bucket=bucket,Key=key+file_name.split("/")[-1])
         print("The file already exists and has a dimension of "+str(response['ContentLength']/1024./1024.)+' MB')
         return True
 
@@ -97,7 +97,7 @@ for j in lista:
     print('Transferring '+name)
 
     while(not status):   #tries many times for errors of connection or others that may be worth another try
-
+            print(name, TAG)
             status=upload_file(name,tag=TAG)
             #if(status): os.system("rm "+name) 
             current_try=current_try+1
