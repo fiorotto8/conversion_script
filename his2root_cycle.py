@@ -20,7 +20,7 @@ def get_numbers_from_filename(filename):
     return re.search(r'\d+', filename).group(0)
 
 #root and his config
-file = open("/mnt/c/Users/Cygnus/Desktop/SOFTWARE/conversion_script/dirconfig.txt", "r")
+file = open("/mnt/c/Users/david/MyDrive/Software/conversion_script/dirconfig.txt", "r")
 for string in file:
     exec(string)
 file.close()
